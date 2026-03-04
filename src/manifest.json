@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "cite-graph",
+  "description": "Turn any article into an interactive citation map on the fly. Developed by Myroslav Mokhammad Abdeljawwad.",
+  "version": "1.0.0",
+  "icons": {
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background.ts"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content-script.ts"],
+      "run_at": "document_end",
+      "world": "MAIN"
+    }
+  ],
+  "action": {
+    "default_popup": "src/ui/popup.html",
+    "default_title": "cite-graph: View citation map"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/ui/graph-view.css",
+        "src/ui/graph-view.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "options_ui": {
+    "page": "src/ui/options.html",
+    "open_in_tab": false
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C"
+      }
+    }
+  },
+  "developer_info": {
+    "name": "Myroslav Mokhammad Abdeljawwad",
+    "email": "myroslav@example.com"
+  }
+}
